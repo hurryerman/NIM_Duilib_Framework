@@ -1,4 +1,4 @@
-// Copyright (c) 2016 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,13 +9,15 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
+// $hash=b257247c1eab4ebd5796b5bc81670d437486d76f$
+//
 
 #include "libcef_dll/ctocpp/print_dialog_callback_ctocpp.h"
 #include "libcef_dll/ctocpp/print_settings_ctocpp.h"
 
-
 // VIRTUAL METHODS - Body may be edited by hand.
 
+NO_SANITIZE("cfi-icall")
 void CefPrintDialogCallbackCToCpp::Continue(
     CefRefPtr<CefPrintSettings> settings) {
   cef_print_dialog_callback_t* _struct = GetStruct();
@@ -30,11 +32,10 @@ void CefPrintDialogCallbackCToCpp::Continue(
     return;
 
   // Execute
-  _struct->cont(_struct,
-      CefPrintSettingsCToCpp::Unwrap(settings));
+  _struct->cont(_struct, CefPrintSettingsCToCpp::Unwrap(settings));
 }
 
-void CefPrintDialogCallbackCToCpp::Cancel() {
+NO_SANITIZE("cfi-icall") void CefPrintDialogCallbackCToCpp::Cancel() {
   cef_print_dialog_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cancel))
     return;
@@ -45,24 +46,30 @@ void CefPrintDialogCallbackCToCpp::Cancel() {
   _struct->cancel(_struct);
 }
 
-
 // CONSTRUCTOR - Do not edit by hand.
 
-CefPrintDialogCallbackCToCpp::CefPrintDialogCallbackCToCpp() {
-}
+CefPrintDialogCallbackCToCpp::CefPrintDialogCallbackCToCpp() {}
 
-template<> cef_print_dialog_callback_t* CefCToCpp<CefPrintDialogCallbackCToCpp,
-    CefPrintDialogCallback, cef_print_dialog_callback_t>::UnwrapDerived(
-    CefWrapperType type, CefPrintDialogCallback* c) {
+template <>
+cef_print_dialog_callback_t* CefCToCppRefCounted<
+    CefPrintDialogCallbackCToCpp,
+    CefPrintDialogCallback,
+    cef_print_dialog_callback_t>::UnwrapDerived(CefWrapperType type,
+                                                CefPrintDialogCallback* c) {
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
 
-#ifndef NDEBUG
-template<> base::AtomicRefCount CefCToCpp<CefPrintDialogCallbackCToCpp,
-    CefPrintDialogCallback, cef_print_dialog_callback_t>::DebugObjCt = 0;
+#if DCHECK_IS_ON()
+template <>
+base::AtomicRefCount CefCToCppRefCounted<
+    CefPrintDialogCallbackCToCpp,
+    CefPrintDialogCallback,
+    cef_print_dialog_callback_t>::DebugObjCt ATOMIC_DECLARATION;
 #endif
 
-template<> CefWrapperType CefCToCpp<CefPrintDialogCallbackCToCpp,
-    CefPrintDialogCallback, cef_print_dialog_callback_t>::kWrapperType =
+template <>
+CefWrapperType CefCToCppRefCounted<CefPrintDialogCallbackCToCpp,
+                                   CefPrintDialogCallback,
+                                   cef_print_dialog_callback_t>::kWrapperType =
     WT_PRINT_DIALOG_CALLBACK;

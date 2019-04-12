@@ -34,7 +34,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// 初始化 CEF
 	CefSettings settings;
-	if (!nim_cef::CefManager::GetInstance()->Initialize(QPath::GetAppPath() + L"cef_temp\\", settings, true))
+	if (!nim_cef::CefManager::GetInstance()->Initialize(QPath::GetAppPath() + L"cef_temp\\", settings, false))
 	{
 		return 0;
 	}

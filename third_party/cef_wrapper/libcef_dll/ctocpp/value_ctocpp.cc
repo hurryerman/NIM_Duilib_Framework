@@ -1,4 +1,4 @@
-// Copyright (c) 2016 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,16 +9,17 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
+// $hash=efbbef13092b03ef4a65b672e4660fef69509421$
+//
 
+#include "libcef_dll/ctocpp/value_ctocpp.h"
 #include "libcef_dll/ctocpp/binary_value_ctocpp.h"
 #include "libcef_dll/ctocpp/dictionary_value_ctocpp.h"
 #include "libcef_dll/ctocpp/list_value_ctocpp.h"
-#include "libcef_dll/ctocpp/value_ctocpp.h"
-
 
 // STATIC METHODS - Body may be edited by hand.
 
-CefRefPtr<CefValue> CefValue::Create() {
+NO_SANITIZE("cfi-icall") CefRefPtr<CefValue> CefValue::Create() {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
@@ -28,10 +29,9 @@ CefRefPtr<CefValue> CefValue::Create() {
   return CefValueCToCpp::Wrap(_retval);
 }
 
-
 // VIRTUAL METHODS - Body may be edited by hand.
 
-bool CefValueCToCpp::IsValid() {
+NO_SANITIZE("cfi-icall") bool CefValueCToCpp::IsValid() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, is_valid))
     return false;
@@ -42,10 +42,10 @@ bool CefValueCToCpp::IsValid() {
   int _retval = _struct->is_valid(_struct);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
-bool CefValueCToCpp::IsOwned() {
+NO_SANITIZE("cfi-icall") bool CefValueCToCpp::IsOwned() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, is_owned))
     return false;
@@ -56,10 +56,10 @@ bool CefValueCToCpp::IsOwned() {
   int _retval = _struct->is_owned(_struct);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
-bool CefValueCToCpp::IsReadOnly() {
+NO_SANITIZE("cfi-icall") bool CefValueCToCpp::IsReadOnly() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, is_read_only))
     return false;
@@ -70,10 +70,10 @@ bool CefValueCToCpp::IsReadOnly() {
   int _retval = _struct->is_read_only(_struct);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
-bool CefValueCToCpp::IsSame(CefRefPtr<CefValue> that) {
+NO_SANITIZE("cfi-icall") bool CefValueCToCpp::IsSame(CefRefPtr<CefValue> that) {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, is_same))
     return false;
@@ -86,13 +86,13 @@ bool CefValueCToCpp::IsSame(CefRefPtr<CefValue> that) {
     return false;
 
   // Execute
-  int _retval = _struct->is_same(_struct,
-      CefValueCToCpp::Unwrap(that));
+  int _retval = _struct->is_same(_struct, CefValueCToCpp::Unwrap(that));
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
+NO_SANITIZE("cfi-icall")
 bool CefValueCToCpp::IsEqual(CefRefPtr<CefValue> that) {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, is_equal))
@@ -106,14 +106,13 @@ bool CefValueCToCpp::IsEqual(CefRefPtr<CefValue> that) {
     return false;
 
   // Execute
-  int _retval = _struct->is_equal(_struct,
-      CefValueCToCpp::Unwrap(that));
+  int _retval = _struct->is_equal(_struct, CefValueCToCpp::Unwrap(that));
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
-CefRefPtr<CefValue> CefValueCToCpp::Copy() {
+NO_SANITIZE("cfi-icall") CefRefPtr<CefValue> CefValueCToCpp::Copy() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, copy))
     return NULL;
@@ -127,7 +126,7 @@ CefRefPtr<CefValue> CefValueCToCpp::Copy() {
   return CefValueCToCpp::Wrap(_retval);
 }
 
-CefValueType CefValueCToCpp::GetType() {
+NO_SANITIZE("cfi-icall") CefValueType CefValueCToCpp::GetType() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_type))
     return VTYPE_INVALID;
@@ -141,7 +140,7 @@ CefValueType CefValueCToCpp::GetType() {
   return _retval;
 }
 
-bool CefValueCToCpp::GetBool() {
+NO_SANITIZE("cfi-icall") bool CefValueCToCpp::GetBool() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_bool))
     return false;
@@ -152,10 +151,10 @@ bool CefValueCToCpp::GetBool() {
   int _retval = _struct->get_bool(_struct);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
-int CefValueCToCpp::GetInt() {
+NO_SANITIZE("cfi-icall") int CefValueCToCpp::GetInt() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_int))
     return 0;
@@ -169,7 +168,7 @@ int CefValueCToCpp::GetInt() {
   return _retval;
 }
 
-double CefValueCToCpp::GetDouble() {
+NO_SANITIZE("cfi-icall") double CefValueCToCpp::GetDouble() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_double))
     return 0;
@@ -183,7 +182,7 @@ double CefValueCToCpp::GetDouble() {
   return _retval;
 }
 
-CefString CefValueCToCpp::GetString() {
+NO_SANITIZE("cfi-icall") CefString CefValueCToCpp::GetString() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_string))
     return CefString();
@@ -199,7 +198,7 @@ CefString CefValueCToCpp::GetString() {
   return _retvalStr;
 }
 
-CefRefPtr<CefBinaryValue> CefValueCToCpp::GetBinary() {
+NO_SANITIZE("cfi-icall") CefRefPtr<CefBinaryValue> CefValueCToCpp::GetBinary() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_binary))
     return NULL;
@@ -213,6 +212,7 @@ CefRefPtr<CefBinaryValue> CefValueCToCpp::GetBinary() {
   return CefBinaryValueCToCpp::Wrap(_retval);
 }
 
+NO_SANITIZE("cfi-icall")
 CefRefPtr<CefDictionaryValue> CefValueCToCpp::GetDictionary() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_dictionary))
@@ -227,7 +227,7 @@ CefRefPtr<CefDictionaryValue> CefValueCToCpp::GetDictionary() {
   return CefDictionaryValueCToCpp::Wrap(_retval);
 }
 
-CefRefPtr<CefListValue> CefValueCToCpp::GetList() {
+NO_SANITIZE("cfi-icall") CefRefPtr<CefListValue> CefValueCToCpp::GetList() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_list))
     return NULL;
@@ -241,7 +241,7 @@ CefRefPtr<CefListValue> CefValueCToCpp::GetList() {
   return CefListValueCToCpp::Wrap(_retval);
 }
 
-bool CefValueCToCpp::SetNull() {
+NO_SANITIZE("cfi-icall") bool CefValueCToCpp::SetNull() {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_null))
     return false;
@@ -252,10 +252,10 @@ bool CefValueCToCpp::SetNull() {
   int _retval = _struct->set_null(_struct);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
-bool CefValueCToCpp::SetBool(bool value) {
+NO_SANITIZE("cfi-icall") bool CefValueCToCpp::SetBool(bool value) {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_bool))
     return false;
@@ -263,14 +263,13 @@ bool CefValueCToCpp::SetBool(bool value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
-  int _retval = _struct->set_bool(_struct,
-      value);
+  int _retval = _struct->set_bool(_struct, value);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
-bool CefValueCToCpp::SetInt(int value) {
+NO_SANITIZE("cfi-icall") bool CefValueCToCpp::SetInt(int value) {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_int))
     return false;
@@ -278,14 +277,13 @@ bool CefValueCToCpp::SetInt(int value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
-  int _retval = _struct->set_int(_struct,
-      value);
+  int _retval = _struct->set_int(_struct, value);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
-bool CefValueCToCpp::SetDouble(double value) {
+NO_SANITIZE("cfi-icall") bool CefValueCToCpp::SetDouble(double value) {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_double))
     return false;
@@ -293,13 +291,13 @@ bool CefValueCToCpp::SetDouble(double value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
-  int _retval = _struct->set_double(_struct,
-      value);
+  int _retval = _struct->set_double(_struct, value);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
+NO_SANITIZE("cfi-icall")
 bool CefValueCToCpp::SetString(const CefString& value) {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_string))
@@ -310,13 +308,13 @@ bool CefValueCToCpp::SetString(const CefString& value) {
   // Unverified params: value
 
   // Execute
-  int _retval = _struct->set_string(_struct,
-      value.GetStruct());
+  int _retval = _struct->set_string(_struct, value.GetStruct());
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
+NO_SANITIZE("cfi-icall")
 bool CefValueCToCpp::SetBinary(CefRefPtr<CefBinaryValue> value) {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_binary))
@@ -330,13 +328,14 @@ bool CefValueCToCpp::SetBinary(CefRefPtr<CefBinaryValue> value) {
     return false;
 
   // Execute
-  int _retval = _struct->set_binary(_struct,
-      CefBinaryValueCToCpp::Unwrap(value));
+  int _retval =
+      _struct->set_binary(_struct, CefBinaryValueCToCpp::Unwrap(value));
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
+NO_SANITIZE("cfi-icall")
 bool CefValueCToCpp::SetDictionary(CefRefPtr<CefDictionaryValue> value) {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_dictionary))
@@ -350,13 +349,14 @@ bool CefValueCToCpp::SetDictionary(CefRefPtr<CefDictionaryValue> value) {
     return false;
 
   // Execute
-  int _retval = _struct->set_dictionary(_struct,
-      CefDictionaryValueCToCpp::Unwrap(value));
+  int _retval =
+      _struct->set_dictionary(_struct, CefDictionaryValueCToCpp::Unwrap(value));
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
+NO_SANITIZE("cfi-icall")
 bool CefValueCToCpp::SetList(CefRefPtr<CefListValue> value) {
   cef_value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_list))
@@ -370,29 +370,33 @@ bool CefValueCToCpp::SetList(CefRefPtr<CefListValue> value) {
     return false;
 
   // Execute
-  int _retval = _struct->set_list(_struct,
-      CefListValueCToCpp::Unwrap(value));
+  int _retval = _struct->set_list(_struct, CefListValueCToCpp::Unwrap(value));
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
-
 
 // CONSTRUCTOR - Do not edit by hand.
 
-CefValueCToCpp::CefValueCToCpp() {
-}
+CefValueCToCpp::CefValueCToCpp() {}
 
-template<> cef_value_t* CefCToCpp<CefValueCToCpp, CefValue,
-    cef_value_t>::UnwrapDerived(CefWrapperType type, CefValue* c) {
+template <>
+cef_value_t*
+CefCToCppRefCounted<CefValueCToCpp, CefValue, cef_value_t>::UnwrapDerived(
+    CefWrapperType type,
+    CefValue* c) {
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
 
-#ifndef NDEBUG
-template<> base::AtomicRefCount CefCToCpp<CefValueCToCpp, CefValue,
-    cef_value_t>::DebugObjCt = 0;
+#if DCHECK_IS_ON()
+template <>
+base::AtomicRefCount
+    CefCToCppRefCounted<CefValueCToCpp, CefValue, cef_value_t>::DebugObjCt
+        ATOMIC_DECLARATION;
 #endif
 
-template<> CefWrapperType CefCToCpp<CefValueCToCpp, CefValue,
-    cef_value_t>::kWrapperType = WT_VALUE;
+template <>
+CefWrapperType
+    CefCToCppRefCounted<CefValueCToCpp, CefValue, cef_value_t>::kWrapperType =
+        WT_VALUE;

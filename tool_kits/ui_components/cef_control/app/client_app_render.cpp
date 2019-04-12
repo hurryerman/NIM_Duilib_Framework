@@ -32,31 +32,32 @@ void ClientApp::OnWebKitInitialized()
 	 *    console.log(arguments)
 	 * })
 	 */
-	std::string extensionCode = R"(
-		var NimCefWebInstance = {};
-		(() => {
-			NimCefWebInstance.call = (functionName, arg1, arg2) => {
-				if (typeof arg1 === 'function') {
-					native function call(functionName, arg1);
-					return call(functionName, arg1);
-				} else {
-					const jsonString = JSON.stringify(arg1);
-					native function call(functionName, jsonString, arg2);
-					return call(functionName, jsonString, arg2);
-				}
-			};
-			NimCefWebInstance.register = (functionName, callback) => {
-				native function register(functionName, callback);
-				return register(functionName, callback);
-			};
-		})();
-	)";
-	CefRefPtr<CefJSHandler> handler = new CefJSHandler();
+	//std::string extensionCode = R"(
+	//	var NimCefWebInstance = {};
+	//	(() => {
+	//		NimCefWebInstance.call = (functionName, arg1, arg2) => {
+	//			if (typeof arg1 === 'function') {
+	//				native function call(functionName, arg1);
+	//				return call(functionName, arg1);
+	//			} else {
+	//				const jsonString = JSON.stringify(arg1);
+	//				native function call(functionName, jsonString, arg2);
+	//				return call(functionName, jsonString, arg2);
+	//			}
+	//		};
+	//		NimCefWebInstance.register = (functionName, callback) => {
+	//			native function register(functionName, callback);
+	//			return register(functionName, callback);
+	//		};
+	//	})();
+	//)";
+ //   std::string extensionCode = "var NimCefWebInstance = {};";
+	//CefRefPtr<CefJSHandler> handler = new CefJSHandler();
 
-	if (!render_js_bridge_.get())
-		render_js_bridge_.reset(new CefJSBridge);
-	handler->AttachJSBridge(render_js_bridge_);
- 	CefRegisterExtension("v8/extern", extensionCode, handler);
+	//if (!render_js_bridge_.get())
+	//	render_js_bridge_.reset(new CefJSBridge);
+	//handler->AttachJSBridge(render_js_bridge_);
+ //	CefRegisterExtension("v8/extern", extensionCode, handler);
 }
 
 void ClientApp::OnBrowserCreated(CefRefPtr<CefBrowser> browser)
@@ -74,15 +75,15 @@ CefRefPtr<CefLoadHandler> ClientApp::GetLoadHandler()
 	return NULL;
 }
 
-bool ClientApp::OnBeforeNavigation(
-	CefRefPtr<CefBrowser> browser,
-	CefRefPtr<CefFrame> frame,
-	CefRefPtr<CefRequest> request,
-	NavigationType navigation_type,
-	bool is_redirect)
-{
-	return false;
-}
+//bool ClientApp::OnBeforeNavigation(
+//	CefRefPtr<CefBrowser> browser,
+//	CefRefPtr<CefFrame> frame,
+//	CefRefPtr<CefRequest> request,
+//	NavigationType navigation_type,
+//	bool is_redirect)
+//{
+//	return false;
+//}
 
 void ClientApp::OnContextCreated(CefRefPtr<CefBrowser> browser,	CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context) 
 {

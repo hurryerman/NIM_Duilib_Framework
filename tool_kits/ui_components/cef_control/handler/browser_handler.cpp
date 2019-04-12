@@ -209,7 +209,7 @@ bool BrowserHandler::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& r
 	return false;
 }
 
-bool BrowserHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
+void BrowserHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
 	if (handle_delegate_)
 	{
@@ -217,17 +217,17 @@ bool BrowserHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 		rect.y = 0;
 		rect.width = rect_cef_control_.right - rect_cef_control_.left;
 		rect.height = rect_cef_control_.bottom - rect_cef_control_.top;
-		return true;
+		return;
 	}
 	else
 	{
 		RECT clientRect;
 		if (!::GetClientRect(hwnd_, &clientRect))
-			return false;
+			return;
 		rect.x = rect.y = 0;
 		rect.width = clientRect.right;
 		rect.height = clientRect.bottom;
-		return true;
+		return;
 	}
 
 }
@@ -348,7 +348,11 @@ void BrowserHandler::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefStrin
 		nbase::ThreadManager::PostTask(kThreadUI, nbase::Bind(&HandlerDelegate::OnTitleChange, handle_delegate_, browser, title));
 }
 
-bool BrowserHandler::OnConsoleMessage(CefRefPtr<CefBrowser> browser, const CefString& message, const CefString& source, int line)
+bool BrowserHandler::OnConsoleMessage(CefRefPtr<CefBrowser> browser,
+    cef_log_severity_t level,
+    const CefString& message,
+    const CefString& source,
+    int line)
 {
 	// Log a console message...
 	return true;
@@ -363,7 +367,9 @@ void BrowserHandler::OnLoadingStateChange(CefRefPtr<CefBrowser> browser, bool is
 		nbase::ThreadManager::PostTask(kThreadUI, nbase::Bind(&HandlerDelegate::OnLoadingStateChange, handle_delegate_, browser, isLoading, canGoBack, canGoForward));
 }
 
-void BrowserHandler::OnLoadStart(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame)
+void BrowserHandler::OnLoadStart(CefRefPtr<CefBrowser> browser,
+    CefRefPtr<CefFrame> frame,
+    TransitionType transition_type)
 {
 	// A frame has started loading content...
 	if (handle_delegate_)
@@ -384,9 +390,15 @@ void BrowserHandler::OnLoadError(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFra
 		nbase::ThreadManager::PostTask(kThreadUI, nbase::Bind(&HandlerDelegate::OnLoadError, handle_delegate_, browser, frame, errorCode, errorText, failedUrl));
 }
 
-bool BrowserHandler::OnJSDialog(CefRefPtr<CefBrowser> browser, const CefString& origin_url, const CefString& accept_lang, JSDialogType dialog_type, const CefString& message_text, const CefString& default_prompt_text, CefRefPtr<CefJSDialogCallback> callback, bool& suppress_message)
+bool BrowserHandler::OnJSDialog(CefRefPtr<CefBrowser> browser,
+    const CefString& origin_url,
+    JSDialogType dialog_type,
+    const CefString& message_text,
+    const CefString& default_prompt_text,
+    CefRefPtr<CefJSDialogCallback> callback,
+    bool& suppress_message)
 {
-	// release时阻止弹出js对话框
+	// release时阻止弹出js对话框;
 #ifndef _DEBUG
 	suppress_message = true;
 #endif
@@ -395,7 +407,11 @@ bool BrowserHandler::OnJSDialog(CefRefPtr<CefBrowser> browser, const CefString& 
 }
 
 // CefRequestHandler methods
-bool BrowserHandler::OnBeforeBrowse(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefRequest> request, bool is_redirect)
+bool BrowserHandler::OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
+    CefRefPtr<CefFrame> frame,
+    CefRefPtr<CefRequest> request,
+    bool user_gesture,
+    bool is_redirect)
 {
 	if (handle_delegate_)
 		return handle_delegate_->OnBeforeBrowse(browser, frame, request, is_redirect);

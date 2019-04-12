@@ -59,7 +59,7 @@ void CefControl::ReCreateBrowser()
 	{
 		// 使用无窗模式，离屏渲染
 		CefWindowInfo window_info;
-		window_info.SetAsWindowless(m_pWindow->GetHWND(), false);
+		window_info.SetAsWindowless(m_pWindow->GetHWND());
 		CefBrowserSettings browser_settings;
 		//browser_settings.file_access_from_file_urls = STATE_ENABLED;
 		//browser_settings.universal_access_from_file_urls = STATE_ENABLED;
@@ -291,7 +291,7 @@ bool CefControl::AttachDevTools(Control* control)
 	else
 	{
 		CefWindowInfo windowInfo;
-		windowInfo.SetAsWindowless(GetWindow()->GetHWND(), false);
+		windowInfo.SetAsWindowless(GetWindow()->GetHWND());
 		CefBrowserSettings settings;
 		browser->GetHost()->ShowDevTools(windowInfo, view_browser->GetHost()->GetClient(), settings, CefPoint());
 		devtool_attached_ = true;

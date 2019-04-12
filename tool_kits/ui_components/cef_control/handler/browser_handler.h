@@ -21,7 +21,7 @@ class BrowserHandler :
 	public CefContextMenuHandler,
 	public CefDisplayHandler,
 	public CefDragHandler,
-	public CefGeolocationHandler,
+	//public CefGeolocationHandler,
 	public CefJSDialogHandler,
 	public CefKeyboardHandler,	
 	public CefLoadHandler,
@@ -170,7 +170,7 @@ public:
 	virtual CefRefPtr<CefRenderHandler>  GetRenderHandler() OVERRIDE { return this; }
 	virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() OVERRIDE{ return this; }
 	virtual CefRefPtr<CefDragHandler> GetDragHandler() OVERRIDE{ return this; }
-	virtual CefRefPtr<CefGeolocationHandler> GetGeolocationHandler() OVERRIDE{ return this; }
+	//virtual CefRefPtr<CefGeolocationHandler> GetGeolocationHandler() OVERRIDE{ return this; }
 	virtual CefRefPtr<CefJSDialogHandler> GetJSDialogHandler() { return this; }
 	virtual CefRefPtr<CefKeyboardHandler> GetKeyboardHandler() OVERRIDE{ return this; }
 	virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() OVERRIDE{ return this; }
@@ -202,7 +202,7 @@ public:
 	// CefRenderHandler methods
 	virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) OVERRIDE;
 
-	virtual bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) OVERRIDE;
+	virtual void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) OVERRIDE;
 
 	virtual bool GetScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY) OVERRIDE;
 
@@ -237,12 +237,18 @@ public:
 
 	virtual void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) OVERRIDE;
 
-	virtual bool OnConsoleMessage(CefRefPtr<CefBrowser> browser, const CefString& message, const CefString& source, int line) OVERRIDE;
+    virtual bool OnConsoleMessage(CefRefPtr<CefBrowser> browser,
+        cef_log_severity_t level,
+        const CefString& message,
+        const CefString& source,
+        int line) OVERRIDE;
 
 	// CefLoadHandler methods
 	virtual void OnLoadingStateChange(CefRefPtr<CefBrowser> browser, bool isLoading, bool canGoBack, bool canGoForward) OVERRIDE;
 
-	virtual void OnLoadStart(CefRefPtr<CefBrowser> browser,	CefRefPtr<CefFrame> frame) OVERRIDE;
+    virtual void OnLoadStart(CefRefPtr<CefBrowser> browser,
+        CefRefPtr<CefFrame> frame,
+        TransitionType transition_type) OVERRIDE;
 
 	virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode) OVERRIDE;
 
@@ -253,20 +259,20 @@ public:
 		const CefString& failedUrl) OVERRIDE;
 
 	// CefJSDialogHandler methods
-	virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
-		const CefString& origin_url,
-		const CefString& accept_lang,
-		JSDialogType dialog_type,
-		const CefString& message_text,
-		const CefString& default_prompt_text,
-		CefRefPtr<CefJSDialogCallback> callback,
-		bool& suppress_message) OVERRIDE;
+    virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
+        const CefString& origin_url,
+        JSDialogType dialog_type,
+        const CefString& message_text,
+        const CefString& default_prompt_text,
+        CefRefPtr<CefJSDialogCallback> callback,
+        bool& suppress_message) OVERRIDE;
 
 	// CefRequestHandler methods
-	bool OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
-		CefRefPtr<CefFrame> frame,
-		CefRefPtr<CefRequest> request,
-		bool is_redirect) OVERRIDE;
+    bool OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
+        CefRefPtr<CefFrame> frame,
+        CefRefPtr<CefRequest> request,
+        bool user_gesture,
+        bool is_redirect) OVERRIDE;
 
 	virtual void OnProtocolExecution(CefRefPtr<CefBrowser> browser,
 		const CefString& url,

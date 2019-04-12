@@ -8,11 +8,16 @@
 #include "taskbar/taskbar_manager.h"
 #include "ShObjidl.h"
 
+const bool kEnableOffsetRender = false;
+
 interface IDropTargetHelper;
 
 class BrowserBox;
 class BrowserTabItem;
-class MultiBrowserForm : public ui::ShadowWndBase, public IDropTarget, public TaskbarManager::ITaskbarDelegate
+class MultiBrowserForm 
+    :public std::conditional<kEnableOffsetRender, ui::WindowImplBase, ui::ShadowWndBase>::type,
+    //: public ui::ShadowWndBase, 
+    public IDropTarget, public TaskbarManager::ITaskbarDelegate
 {
 public:
 	MultiBrowserForm();

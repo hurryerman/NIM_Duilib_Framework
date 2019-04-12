@@ -101,6 +101,7 @@ void CefManager::AddCefDllToPath()
 //		(PS:如果开发者不使用负责Cef功能的开发，可以切换到release模式的cef dll文件，这样即使在deubg下也不会报错，修改AddCefDllToPath代码可以切换到release目录)
 bool CefManager::Initialize(const std::wstring& app_data_dir, CefSettings &settings, bool is_enable_offset_render /*= true*/)
 {
+    CefEnableHighDPISupport();
 #if !defined(SUPPORT_CEF)
 	return true;
 #endif
@@ -206,10 +207,12 @@ void CefManager::GetCefSetting(const std::wstring& app_data_dir, CefSettings &se
 	// 调试模型下使用单进程，但是千万不要在release发布版本中使用，官方已经不推荐使用单进程模式
 	// cef1916版本debug模式:在单进程模式下程序退出时会触发中断
 #ifdef _DEBUG
-	settings.single_process = true;
+	//settings.single_process = true;
 #else
-	settings.single_process = false;
+	//settings.single_process = false;
 #endif
+
+    CefString(&settings.locale).FromASCII("zh-CN");
 
 	// cef2623、2526版本debug模式:在使用multi_threaded_message_loop时退出程序会触发中断
 	// 加入disable-extensions参数可以修复这个问题，但是会导致一些页面打开时报错

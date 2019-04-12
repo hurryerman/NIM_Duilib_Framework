@@ -1,4 +1,4 @@
-// Copyright (c) 2016 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2019 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,13 +9,15 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
+// $hash=cb1e9c4a5e0eb746ae681adea1c2a88e603f56a2$
+//
 
-#include "libcef_dll/ctocpp/list_value_ctocpp.h"
 #include "libcef_dll/ctocpp/process_message_ctocpp.h"
-
+#include "libcef_dll/ctocpp/list_value_ctocpp.h"
 
 // STATIC METHODS - Body may be edited by hand.
 
+NO_SANITIZE("cfi-icall")
 CefRefPtr<CefProcessMessage> CefProcessMessage::Create(const CefString& name) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
@@ -25,17 +27,15 @@ CefRefPtr<CefProcessMessage> CefProcessMessage::Create(const CefString& name) {
     return NULL;
 
   // Execute
-  cef_process_message_t* _retval = cef_process_message_create(
-      name.GetStruct());
+  cef_process_message_t* _retval = cef_process_message_create(name.GetStruct());
 
   // Return type: refptr_same
   return CefProcessMessageCToCpp::Wrap(_retval);
 }
 
-
 // VIRTUAL METHODS - Body may be edited by hand.
 
-bool CefProcessMessageCToCpp::IsValid() {
+NO_SANITIZE("cfi-icall") bool CefProcessMessageCToCpp::IsValid() {
   cef_process_message_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, is_valid))
     return false;
@@ -46,10 +46,10 @@ bool CefProcessMessageCToCpp::IsValid() {
   int _retval = _struct->is_valid(_struct);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
-bool CefProcessMessageCToCpp::IsReadOnly() {
+NO_SANITIZE("cfi-icall") bool CefProcessMessageCToCpp::IsReadOnly() {
   cef_process_message_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, is_read_only))
     return false;
@@ -60,9 +60,10 @@ bool CefProcessMessageCToCpp::IsReadOnly() {
   int _retval = _struct->is_read_only(_struct);
 
   // Return type: bool
-  return _retval?true:false;
+  return _retval ? true : false;
 }
 
+NO_SANITIZE("cfi-icall")
 CefRefPtr<CefProcessMessage> CefProcessMessageCToCpp::Copy() {
   cef_process_message_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, copy))
@@ -77,7 +78,7 @@ CefRefPtr<CefProcessMessage> CefProcessMessageCToCpp::Copy() {
   return CefProcessMessageCToCpp::Wrap(_retval);
 }
 
-CefString CefProcessMessageCToCpp::GetName() {
+NO_SANITIZE("cfi-icall") CefString CefProcessMessageCToCpp::GetName() {
   cef_process_message_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_name))
     return CefString();
@@ -93,6 +94,7 @@ CefString CefProcessMessageCToCpp::GetName() {
   return _retvalStr;
 }
 
+NO_SANITIZE("cfi-icall")
 CefRefPtr<CefListValue> CefProcessMessageCToCpp::GetArgumentList() {
   cef_process_message_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_argument_list))
@@ -107,23 +109,30 @@ CefRefPtr<CefListValue> CefProcessMessageCToCpp::GetArgumentList() {
   return CefListValueCToCpp::Wrap(_retval);
 }
 
-
 // CONSTRUCTOR - Do not edit by hand.
 
-CefProcessMessageCToCpp::CefProcessMessageCToCpp() {
-}
+CefProcessMessageCToCpp::CefProcessMessageCToCpp() {}
 
-template<> cef_process_message_t* CefCToCpp<CefProcessMessageCToCpp,
-    CefProcessMessage, cef_process_message_t>::UnwrapDerived(
-    CefWrapperType type, CefProcessMessage* c) {
+template <>
+cef_process_message_t* CefCToCppRefCounted<
+    CefProcessMessageCToCpp,
+    CefProcessMessage,
+    cef_process_message_t>::UnwrapDerived(CefWrapperType type,
+                                          CefProcessMessage* c) {
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
 
-#ifndef NDEBUG
-template<> base::AtomicRefCount CefCToCpp<CefProcessMessageCToCpp,
-    CefProcessMessage, cef_process_message_t>::DebugObjCt = 0;
+#if DCHECK_IS_ON()
+template <>
+base::AtomicRefCount CefCToCppRefCounted<CefProcessMessageCToCpp,
+                                         CefProcessMessage,
+                                         cef_process_message_t>::DebugObjCt
+    ATOMIC_DECLARATION;
 #endif
 
-template<> CefWrapperType CefCToCpp<CefProcessMessageCToCpp, CefProcessMessage,
-    cef_process_message_t>::kWrapperType = WT_PROCESS_MESSAGE;
+template <>
+CefWrapperType CefCToCppRefCounted<CefProcessMessageCToCpp,
+                                   CefProcessMessage,
+                                   cef_process_message_t>::kWrapperType =
+    WT_PROCESS_MESSAGE;
