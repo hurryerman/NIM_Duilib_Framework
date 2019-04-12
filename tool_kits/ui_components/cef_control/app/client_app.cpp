@@ -24,16 +24,19 @@ void ClientApp::OnBeforeCommandLineProcessing(const CefString& process_type, Cef
 	// Pass additional command-line flags to the browser process.
 	if (process_type.empty()) 
 	{
-        command_line->AppendSwitchWithValue("--ppapi-flash-version", "32.0.0.171");
-        command_line->AppendSwitchWithValue("--ppapi-flash-path", "PepperFlash\\pepflashplayer.dll");
+        //C:\Windows\SysWOW64\Macromed\Flash\PepperFlash\\pepflashplayer.dll;
+        //command_line->AppendSwitchWithValue("--ppapi-flash-version", "32.0.0.171");
+        //command_line->AppendSwitchWithValue("--ppapi-flash-path", "PepperFlash\\pepflashplayer.dll");
+        //允许使用系统flash;
+        command_line->AppendSwitchWithValue("--enable-system-flash", "1");
 
-		//同一个域下的使用同一个渲染进程
+		//同一个域下的使用同一个渲染进程;
 		command_line->AppendSwitch("process-per-site");
 		command_line->AppendSwitch("disable-gpu");
 		command_line->AppendSwitch("disable-gpu-compositing");
 		//command_line->AppendSwitchWithValue("proxy-server", "SOCKS5://127.0.0.1:1080");	
 
-		// 开启离屏渲染
+		// 开启离屏渲染;
 		if (CefManager::GetInstance()->IsEnableOffsetRender())
 		{
 			command_line->AppendSwitch("disable-surfaces");
