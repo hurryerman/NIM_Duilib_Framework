@@ -129,7 +129,19 @@ void BrowserBox::SetPos(UiRect rc)
 
 void BrowserBox::OnBeforeMenu(CefRefPtr<CefContextMenuParams> params, CefRefPtr<CefMenuModel> model)
 {
-
+    CefString strLinkUrl = params->GetLinkUrl();
+    CefString strPageUrl = params->GetPageUrl();
+    CefString strFrameUrl = params->GetFrameUrl();
+    CefString strSourceUrl = params->GetSourceUrl();
+    CefString strUnfilteredLinkUrl = params->GetUnfilteredLinkUrl();
+    CefString strSelectionText = params->GetSelectionText();
+    int iY = params->GetXCoord();
+    wprintf_s(L"OnBeforeMenu:\r\nstrLinkUrl:%s\r\n", strLinkUrl.ToWString().c_str());
+    wprintf_s(L"strPageUrl:%s\r\n", strPageUrl.ToWString().c_str());
+    wprintf_s(L"strFrameUrl:%s\r\n", strFrameUrl.ToWString().c_str());
+    wprintf_s(L"strSourceUrl:%s\r\n", strSourceUrl.ToWString().c_str());
+    wprintf_s(L"strUnfilteredLinkUrl:%s\r\n", strUnfilteredLinkUrl.ToWString().c_str());
+    wprintf_s(L"strSelectionText:%s\r\n", strSelectionText.ToWString().c_str());
 }
 
 bool BrowserBox::OnMenuCommand(CefRefPtr<CefContextMenuParams> params, int command_id, CefContextMenuHandler::EventFlags event_flags)

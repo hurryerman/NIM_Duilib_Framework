@@ -159,37 +159,43 @@ LRESULT MultiBrowserForm::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL&
 	else
 	{
 		int browser_count = GetBoxCount();
-		if (browser_count > 0 && NULL != active_browser_box_)
-		{
-			// 如果只有一个浏览器盒子，就直接关闭
-			if (1 == browser_count)
-			{
-				CloseBox(active_browser_box_->GetId());
-			}
-			// 如果包含多个浏览器盒子，就询问用户
-			else
-			{
-				MsgboxCallback cb = ToWeakCallback([this](MsgBoxRet ret)
-				{
-					if (ret == MB_YES)
-					{
-						while (GetBoxCount() > 0)
-						{
-							Control *tab_item = tab_list_->GetItemAt(0);
-							ASSERT(NULL != tab_item);
-							if (NULL == tab_item)
-								break;
+        if (browser_count != 0)
+        {
+            bHandled = TRUE;
+            return 0;
+        }
 
-							CloseBox(tab_item->GetUTF8Name());
-						}
-					}
-				});
-				ShowMsgBox(this->GetHWND(), cb, L"STRID_CEF_BROWSER_CLOSING", true, L"STRING_TIPS", true, L"STRING_OK", true, L"STRING_NO", true);
-			}
+		//if (browser_count > 0 && NULL != active_browser_box_)
+		//{
+		//	// 如果只有一个浏览器盒子，就直接关闭
+		//	if (1 == browser_count)
+		//	{
+		//		CloseBox(active_browser_box_->GetId());
+		//	}
+		//	// 如果包含多个浏览器盒子，就询问用户
+		//	else
+		//	{
+		//		MsgboxCallback cb = ToWeakCallback([this](MsgBoxRet ret)
+		//		{
+		//			if (ret == MB_YES)
+		//			{
+		//				while (GetBoxCount() > 0)
+		//				{
+		//					Control *tab_item = tab_list_->GetItemAt(0);
+		//					ASSERT(NULL != tab_item);
+		//					if (NULL == tab_item)
+		//						break;
 
-			bHandled = TRUE;
-			return 0;
-		}
+		//					CloseBox(tab_item->GetUTF8Name());
+		//				}
+		//			}
+		//		});
+		//		ShowMsgBox(this->GetHWND(), cb, L"STRID_CEF_BROWSER_CLOSING", true, L"STRING_TIPS", true, L"STRING_OK", true, L"STRING_NO", true);
+		//	}
+
+		//	bHandled = TRUE;
+		//	return 0;
+		//}
 	}
 
 	return __super::OnClose(uMsg, wParam, lParam, bHandled);
@@ -241,7 +247,23 @@ bool MultiBrowserForm::OnClicked( ui::EventArgs* arg )
 			return true;
 		}
 
-		CloseBox(active_browser_box_->GetId());
+        MsgboxCallback cb = ToWeakCallback([this](MsgBoxRet ret)
+        {
+            if (ret == MB_YES)
+            {
+                while (GetBoxCount() > 0)
+                {
+                    Control *tab_item = tab_list_->GetItemAt(0);
+                    ASSERT(NULL != tab_item);
+                    if (NULL == tab_item)
+                        break;
+
+                    CloseBox(tab_item->GetUTF8Name());
+                }
+            }
+        });
+        ShowMsgBox(this->GetHWND(), cb, L"STRID_CEF_BROWSER_CLOSING", true, L"STRING_TIPS", true, L"STRING_OK", true, L"STRING_NO", true);
+		//CloseBox(active_browser_box_->GetId());
 	}
 	else if (name == L"btn_min")
 	{
@@ -279,12 +301,18 @@ bool MultiBrowserForm::OnReturn(ui::EventArgs* arg)
 	std::wstring name = arg->pSender->GetName();
 	if (name == L"edit_url")
 	{
-// 		// 在当前页面跳转
-// 		auto cef_control = active_browser_box_->GetCefControl();
-// 		if (cef_control)
-// 			cef_control->LoadURL(edit_url_->GetText());
-		// 新建标签页
-		MultiBrowserManager::GetInstance()->CreateBorwserBox(this, shared::tools::GenerateTimeStamp(), edit_url_->GetText());
+        if (NULL == active_browser_box_)
+        {
+            return false;
+        }
+ 		// 在当前页面跳转;
+ 		auto cef_control = active_browser_box_->GetCefControl();
+        if (cef_control)
+        {
+            cef_control->LoadURL(edit_url_->GetText());
+        }
+		// 新建标签页;
+		//MultiBrowserManager::GetInstance()->CreateBorwserBox(this, shared::tools::GenerateTimeStamp(), edit_url_->GetText());
 	}
 
 	return false;
@@ -611,6 +639,11 @@ bool MultiBrowserForm::OnTabItemClose(ui::EventArgs* param, const std::string& b
 {
 	if (param->pSender->GetName() == L"tab_item_close")
 	{
+        if (GetBoxCount() == 1)
+        {
+            //如果没有了页面，创建一个默认页面;
+            MultiBrowserManager::GetInstance()->CreateBorwserBox(this, shared::tools::GenerateTimeStamp(), L"");
+        }
 		CloseBox(browser_id);
 	}
 
