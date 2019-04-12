@@ -342,3 +342,20 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database 
 healthchecksdb
+/bin/cef/locales
+/bin/cef/swiftshader
+/bin/cef/v8_context_snapshot.bin
+/bin/cef/snapshot_blob.bin
+/bin/cef/natives_blob.bin
+/bin/cef/libGLESv2.dll
+/bin/cef/libEGL.dll
+/bin/cef/libcef.dll
+/bin/cef/icudtl.dat
+/bin/cef/devtools_resources.pak
+/bin/cef/d3dcompiler_47.dll
+/bin/cef/d3dcompiler_43.dll
+/bin/cef/chrome_elf.dll
+/bin/cef/cef_extensions.pak
+/bin/cef/cef_200_percent.pak
+/bin/cef/cef_100_percent.pak
+/bin/cef/cef.pak
