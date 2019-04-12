@@ -24,8 +24,8 @@ void ClientApp::OnBeforeCommandLineProcessing(const CefString& process_type, Cef
 	// Pass additional command-line flags to the browser process.
 	if (process_type.empty()) 
 	{
-		command_line->AppendSwitchWithValue("ppapi-flash-version", "20.0.0.228");
-		command_line->AppendSwitchWithValue("ppapi-flash-path", "PepperFlash\\pepflashplayer.dll");
+        command_line->AppendSwitchWithValue("--ppapi-flash-version", "32.0.0.171");
+        command_line->AppendSwitchWithValue("--ppapi-flash-path", "PepperFlash\\pepflashplayer.dll");
 
 		//同一个域下的使用同一个渲染进程
 		command_line->AppendSwitch("process-per-site");
