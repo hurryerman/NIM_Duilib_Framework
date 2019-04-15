@@ -3,7 +3,7 @@
     <ListContainerElement class="listitem" maxwidth="150">
         <HBox padding="5,0,10,0" childmargin="5" mouse="false">
             <Box width="32" height="32" valign="center" mouse="false" mousechild="false" visible="true">
-                <Control name="tab_item_icon" width="30" height="30" margin="1,1,0,0" bkimage="icon.png"/>
+                <Control name="tab_item_icon" width="20" height="20" margin="1,1,1,1" valign="center" bkimage="icon.png"/>
                 <!--Control name="tab_item_icon" width="38" height="38" borderround="38,38,38,38" margin="1,1,0,0" bkimage="icon.png"/>
                 <Control class="icon_headimage_mask_40x40"/-->
             </Box>
