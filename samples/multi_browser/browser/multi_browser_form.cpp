@@ -368,29 +368,46 @@ void MultiBrowserForm::CloseBox(const std::string &browser_id)
 
 	std::wstring id = nbase::UTF8ToUTF16(browser_id);
 
-	// 从左侧会话列表项移除对应item
-	BrowserTabItem *tab_item = FindTabItem(id);
-	if (NULL != tab_item)
-	{
-		tab_list_->Remove(tab_item);
-	}
-
-	// 在浏览器列表中找到浏览器盒子并且移除盒子
+	// 在浏览器列表中找到浏览器盒子并且移除盒子;
 	BrowserBox *browser_box = FindBox(id);
 	ASSERT(NULL != browser_box);
 	if (NULL != browser_box)
 	{
-		auto taskbar_item = browser_box->GetTaskbarItem();
-		if (taskbar_item)
-			taskbar_manager_.UnregisterTab(*taskbar_item);
-		browser_box->UninitBrowserBox();
 		// 如果浏览器盒子的数量大于1就立马移除盒子，否则不移除
 		// 如果最后一个浏览器盒子在这里立马移除，在窗口关闭时界面会因为没有控件而变成黑色
-		// 窗口关闭时，会自动的移除这个浏览器盒子
-		if (borwser_box_tab_->GetCount() > 1)
-			borwser_box_tab_->Remove(browser_box);
-		else
-			active_browser_box_ = NULL;
+		// 窗口关闭时，会自动的移除这个浏览器盒子;
+        if (borwser_box_tab_->GetCount() > 1)
+        {
+            if (DetachBox(browser_box))
+            {
+                MultiBrowserForm *browser_form = new MultiBrowserForm;
+                HWND hwnd = browser_form->Create(NULL, L"MultiBrowser", UI_WNDSTYLE_FRAME, 0, false);
+                if (hwnd != NULL)
+                {
+                    if (browser_form->AttachBox(browser_box))
+                    {
+                        browser_form->ShowWindow(false, false);
+                        browser_form->Close(kBrowserBoxClose);
+                    }
+                }
+            }
+        }
+        else
+        {
+            // 从左侧会话列表项移除对应item;
+            BrowserTabItem *tab_item = FindTabItem(id);
+            if (NULL != tab_item)
+            {
+                tab_list_->Remove(tab_item);
+            }
+
+            auto taskbar_item = browser_box->GetTaskbarItem();
+            if (taskbar_item)
+                taskbar_manager_.UnregisterTab(*taskbar_item);
+            browser_box->UninitBrowserBox();
+
+            active_browser_box_ = NULL;
+        }
 	}
 
 	// 当浏览器盒子清空时，关闭浏览器窗口
@@ -460,8 +477,10 @@ bool MultiBrowserForm::DetachBox(BrowserBox *browser_box)
 	tab_list_->Remove(tab_item);
 
 	auto taskbar_item = browser_box->GetTaskbarItem();
-	if (taskbar_item)
-		taskbar_manager_.UnregisterTab(*taskbar_item);
+    if (taskbar_item)
+    {
+        taskbar_manager_.UnregisterTab(*taskbar_item);
+    }
 	// 在右侧Tab浏览器盒子列表中找到浏览器盒子并且移除盒子
 	// 在这里不能delete browser_box
 	bool auto_destroy = borwser_box_tab_->IsAutoDestroy();
