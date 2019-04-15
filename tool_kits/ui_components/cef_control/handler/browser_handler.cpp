@@ -348,7 +348,7 @@ void BrowserHandler::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefStrin
 		nbase::ThreadManager::PostTask(kThreadUI, nbase::Bind(&HandlerDelegate::OnTitleChange, handle_delegate_, browser, title));
 }
 
-void BrowserHandler::BrowserHandler::OnFaviconURLChange(CefRefPtr<CefBrowser> browser,
+void BrowserHandler::OnFaviconURLChange(CefRefPtr<CefBrowser> browser,
     const std::vector<CefString>& icon_urls)
 {
     // Update the browser window title...
