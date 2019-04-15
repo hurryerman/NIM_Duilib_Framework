@@ -348,6 +348,14 @@ void BrowserHandler::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefStrin
 		nbase::ThreadManager::PostTask(kThreadUI, nbase::Bind(&HandlerDelegate::OnTitleChange, handle_delegate_, browser, title));
 }
 
+void BrowserHandler::BrowserHandler::OnFaviconURLChange(CefRefPtr<CefBrowser> browser,
+    const std::vector<CefString>& icon_urls)
+{
+    // Update the browser window title...
+    if (handle_delegate_)
+        nbase::ThreadManager::PostTask(kThreadUI, nbase::Bind(&HandlerDelegate::OnFaviconURLChange, handle_delegate_, browser, icon_urls));
+}
+
 bool BrowserHandler::OnConsoleMessage(CefRefPtr<CefBrowser> browser,
     cef_log_severity_t level,
     const CefString& message,

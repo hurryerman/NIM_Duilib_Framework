@@ -61,6 +61,15 @@ void CefControlBase::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefStrin
 		cb_title_change_(title);
 }
 
+void CefControlBase::OnFaviconURLChange(CefRefPtr<CefBrowser> browser,
+    const std::vector<CefString>& icon_urls)
+{
+    if (cb_faviconurl_change_)
+    {
+        cb_faviconurl_change_(browser, icon_urls);
+    }
+}
+
 void CefControlBase::OnLoadingStateChange(CefRefPtr<CefBrowser> browser, bool isLoading, bool canGoBack, bool canGoForward)
 {
 	if (cb_loadstate_change_)

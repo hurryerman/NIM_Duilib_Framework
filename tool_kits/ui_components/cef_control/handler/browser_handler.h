@@ -68,6 +68,9 @@ public:
 		virtual void OnAddressChange(CefRefPtr<CefBrowser> browser,	CefRefPtr<CefFrame> frame, const CefString& url) = 0;
 
 		virtual void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) = 0;
+        
+        virtual void OnFaviconURLChange(CefRefPtr<CefBrowser> browser,
+            const std::vector<CefString>& icon_urls) = 0;
 
 		virtual void OnLoadingStateChange(CefRefPtr<CefBrowser> browser, bool isLoading, bool canGoBack, bool canGoForward) = 0;
 
@@ -236,6 +239,9 @@ public:
 	virtual void OnAddressChange(CefRefPtr<CefBrowser> browser,	CefRefPtr<CefFrame> frame, const CefString& url) OVERRIDE;
 
 	virtual void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) OVERRIDE;
+    
+    virtual void OnFaviconURLChange(CefRefPtr<CefBrowser> browser,
+        const std::vector<CefString>& icon_urls) OVERRIDE;
 
     virtual bool OnConsoleMessage(CefRefPtr<CefBrowser> browser,
         cef_log_severity_t level,
@@ -276,7 +282,7 @@ public:
 
 	virtual void OnProtocolExecution(CefRefPtr<CefBrowser> browser,
 		const CefString& url,
-		bool& allow_os_execution);
+		bool& allow_os_execution) OVERRIDE;
 
 	cef_return_value_t OnBeforeResourceLoad(
 		CefRefPtr<CefBrowser> browser,

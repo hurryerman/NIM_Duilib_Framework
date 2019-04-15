@@ -18,6 +18,7 @@ namespace ui
 
 	typedef std::function<void(const std::wstring& title)> OnTitleChangeEvent;
 	typedef std::function<void(const std::wstring& url)> OnUrlChangeEvent;
+    typedef std::function<void(CefRefPtr<CefBrowser> browser,const std::vector<CefString>& icon_urls)> OnFaviconURLChangeEvent;
 
 	typedef std::function<bool(const std::wstring& url)> OnLinkClickEvent;
 	typedef std::function<CefRequestHandler::ReturnValue(CefRefPtr<CefRequest> request, bool is_redirect)> OnBeforeResourceLoadEvent;

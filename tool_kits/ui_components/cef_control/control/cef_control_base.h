@@ -202,6 +202,13 @@ public:
 	*/
 	void AttachTitleChange(const OnTitleChangeEvent& callback){ cb_title_change_ = callback; }
 
+    /**
+    * @brief 绑定一个回调函数用于监听页面 icon 改变
+    * @param[in] callback 一个回调函数，参考 OnFaviconURLChangeEvent 声明
+    * @return 无
+    */
+    void AttachFaviconURLChange(const OnFaviconURLChangeEvent& callback) { cb_faviconurl_change_ = callback; }
+
 	/**
 	* @brief 绑定一个回调函数用于监听页面中 frame URL 地址改变
 	* @param[in] callback 一个回调函数，参考 OnUrlChangeEvent 声明
@@ -343,6 +350,9 @@ private:
 	virtual void OnAddressChange(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, const CefString& url) OVERRIDE;
 
 	virtual void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) OVERRIDE;
+    
+    virtual void OnFaviconURLChange(CefRefPtr<CefBrowser> browser,
+        const std::vector<CefString>& icon_urls) OVERRIDE;
 
 	virtual void OnLoadingStateChange(CefRefPtr<CefBrowser> browser, bool isLoading, bool canGoBack, bool canGoForward) OVERRIDE;
 
@@ -421,6 +431,7 @@ protected:
 	OnBeforeMenuEvent			cb_before_menu_ = nullptr;
 	OnMenuCommandEvent			cb_menu_command_ = nullptr;
 	OnTitleChangeEvent			cb_title_change_ = nullptr;
+    OnFaviconURLChangeEvent     cb_faviconurl_change_ = nullptr;
 	OnBeforeResourceLoadEvent	cb_before_resource_load_ = nullptr;
 	OnUrlChangeEvent			cb_url_change_ = nullptr;
 	OnMainURLChengeEvent		cb_main_url_change_ = nullptr;
